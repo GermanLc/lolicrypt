@@ -34,9 +34,31 @@ func main() {
 		}
 	}
 
-	if mode == "" || file == "" || (len(key) == 0 && keyfile == "") {
+	if mode == "" {
+		fmt.Printf("Mode: ")
+		fmt.Scanln(&mode)
+	}
+	if file == "" {
+		fmt.Printf("File: ")
+		fmt.Scanln(&file)
+	}
+	if len(key) == 0 && keyfile == "" {
+		keytype := "n"
+		fmt.Printf("keyfile? [y/N]: ")
+		fmt.Scanln(&keytype)
+		if keytype == "y" {
+			fmt.Printf("Keyfile: ")
+			fmt.Scanln(&keyfile)
+		} else {
+			fmt.Printf("Key: ")
+			fmt.Scanln(&key)
+		}
+	}
+
+	if len(key) == 0 && keyfile == "" {
 		panic("not enough arguments")
 	}
+
 	if keyfile != "" {
 		key, err = ioutil.ReadFile(keyfile)
 		if err != nil {
